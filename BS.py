@@ -15,41 +15,33 @@ def binary_search(arr,target):
             high=mid-1
     return -1
 
-def generate_sorted_list(size):
-    """Generates a large sorted list."""
-    my_list = sorted(random.sample(range(size * 3), size)) # generate unique numbers and sort
-    return my_list
+test_count=5
+dataset_size=5000
+def generate_dataset(size):
+  my_list=sorted(random.sample(range(size*3),size))
+  return my_list
+my_dataset=generate_dataset(dataset_size)
 
-dataset_size = 10_000_000  # Adjust for your needs
-test_count = 10 # Number of tests to run
-
-# Generate the massive sorted list
-massive_list = generate_sorted_list(dataset_size)
-
-# Test for values within the list
-found_times = []
-for _ in range(test_count):
-    target_found = random.choice(massive_list) # pick a value that is in the list
-    start_time = time.time()
-    result = binary_search(massive_list, target_found)
-    end_time = time.time()
-    found_times.append(end_time - start_time)
-    if result != -1:
+found_time=[]
+for i in test_count:
+  target_found=random.choice(my_dataset)
+  start_time=time.time()
+  result=binary_search(my_dataset,target_found)
+  end_time=time.time()
+  found_time.append(end_time-start_time)
+if result != -1:
         print(f"Found {target_found} at index {result}")
-    else:
+else:
         print(f"Error: {target_found} should have been found.")
 
-print(f"average time for found values: {sum(found_times)/len(found_times)}")
 
-# Test for values not in the list
-not_found_times = []
-for _ in range(test_count):
-    target_not_found = max(massive_list) + random.randint(1,1000) # pick a value that is not in the list.
-    start_time = time.time()
-    result = binary_search(massive_list, target_not_found)
-    end_time = time.time()
-    not_found_times.append(end_time - start_time)
-    if result == -1:
+no_found_time=[]
+target_not_found=max(my_dataset)+random.randint(1,100)
+start_time=time.time()
+result=binary_search(my_dataset,target_not_found)
+end_time=time.time()
+no_found_time.append(end_time-start_time)
+if result == -1:
         print(f"Correctly did not find {target_not_found}")
-    else:
+else:
         print(f"Error: {target_not_found} should not have been found.")
